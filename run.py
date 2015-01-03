@@ -1,10 +1,13 @@
 __author__ = 'kele'
 
 import threading
-from src.WhatchaDoin import WhatchaDoin
+
+import click
+
+from src.core.WhatchaDoin import WhatchaDoin
 from src.ui.console import ConsoleUI
 from src.networking.udp import UdpNetworking
-import click
+
 
 @click.command()
 @click.option('--port', default = 8101, help = 'Port number')

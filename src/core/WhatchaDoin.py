@@ -1,11 +1,12 @@
 __author__ = 'kele'
 
-from src.AddressBook import AddressBook
+from . import AddressBook
+
 
 class WhatchaDoin:
     def __init__(self, username, networking):
         self.statuses = {}
-        self.address_book = AddressBook()
+        self.address_book = AddressBook.AddressBook()
         self.user_id = self.address_book.addContact(username, networking.local_address)
         self.setUserStatus('free')
         self.get_status_func = lambda addr: networking.getStatus(addr)
