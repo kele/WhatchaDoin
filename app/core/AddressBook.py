@@ -20,3 +20,6 @@ class AddressBook:
 
     def listContacts(self):
         return str(self.contacts)
+
+    def size(self):
+        return len(self.contacts)

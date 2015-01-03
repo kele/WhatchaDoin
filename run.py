@@ -1,12 +1,12 @@
 __author__ = 'kele'
 
+import click
 import threading
 
-import click
-
-from src.core.WhatchaDoin import WhatchaDoin
-from src.ui.console import ConsoleUI
-from src.networking.udp import UdpNetworking
+from app.core.WhatchaDoin import WhatchaDoin
+from app.networking.udp import UdpNetworking
+from app.core.AddressBook import AddressBook
+from app.ui.console import ConsoleUI
 
 
 @click.command()
@@ -14,15 +14,14 @@ from src.networking.udp import UdpNetworking
 @click.option('--name', default = 'user', help = 'Username')
 def main(port, name):
     networking = UdpNetworking(port)
-    whatcha_doin = WhatchaDoin(name, networking)
-
+    whatcha_doin = WhatchaDoin(name, networking, AddressBook())
     ui = ConsoleUI(whatcha_doin)
 
     networkingThread = threading.Thread(target = lambda: networking.run(whatcha_doin))
-    uiThread = threading.Thread(target = ui.run)
-
     networkingThread.start()
-    uiThread.start()
+
+    ui.run()
+
 
 if __name__ == "__main__":
     main()
