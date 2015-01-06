@@ -1,6 +1,7 @@
 __author__ = 'kele'
 
 import click
+import sys
 import threading
 
 from app.core.WhatchaDoin import WhatchaDoin
@@ -8,6 +9,7 @@ from app.networking.udp import UdpNetworking
 from app.core.AddressBook import AddressBook
 from app.ui.console import ConsoleUI
 
+from app.ui.pyside import PySideUI
 
 @click.command()
 @click.option('--port', default = 8101, help = 'Port number')
@@ -15,7 +17,7 @@ from app.ui.console import ConsoleUI
 def main(port, name):
     networking = UdpNetworking(port)
     whatcha_doin = WhatchaDoin(name, networking, AddressBook())
-    ui = ConsoleUI(whatcha_doin)
+    ui = PySideUI(whatcha_doin) #ConsoleUI(whatcha_doin)
 
     networkingThread = threading.Thread(target = lambda: networking.run(whatcha_doin))
     networkingThread.start()

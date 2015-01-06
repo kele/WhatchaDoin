@@ -52,7 +52,3 @@ class TestWhatchaDoin(unittest.TestCase):
 
         self.assertEqual(returned_status, BUSY_STATUS_2)
         self.networking.getStatus.assert_called_with(FAKE_ADDRESS)
-
-
-
-

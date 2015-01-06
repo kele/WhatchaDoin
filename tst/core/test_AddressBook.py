@@ -65,4 +65,3 @@ class TestAddressBook(unittest.TestCase):
 
     def test_findContact_notExists(self):
         self.assertEqual(self.sut.findContact('fakename'), None)
-
