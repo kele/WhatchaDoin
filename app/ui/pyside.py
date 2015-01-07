@@ -3,6 +3,24 @@ __author__ = 'kele'
 import sys
 from PySide import QtGui, QtCore, QtUiTools
 
+
+class AddressBookModel(QtCore.QAbstractListModel):
+    def __init__(self, address_book):
+        super().__init__()
+        self.address_book = address_book
+
+    def rowCount(self, *args, **kwargs):
+        return self.address_book.size()
+
+    def data(self, index, role = QtCore.Qt.DisplayRole):
+        if role == QtCore.Qt.DisplayRole:
+            if index.row() < self.address_book.size():
+                c = list(self.address_book.contacts.items())[index.row()]
+                return c[0] + ' ' + c[1][0] + ':' + str(c[1][1])
+        else:
+            return None
+
+
 class PySideUI:
     def __init__(self, whatcha_doin):
         self.whatcha_doin = whatcha_doin
@@ -20,6 +38,10 @@ class PySideUI:
         assert isinstance(add_button, QtGui.QPushButton)
         add_button.clicked.connect(self._addButtonAction)
 
+        self.list_view = self.main_window.findChild(QtGui.QListView, 'contactList')
+        self.contacts_model = AddressBookModel(self.whatcha_doin.address_book)
+        self.list_view.setModel(self.contacts_model)
+
         self.main_window.show()
 
     def run(self):
@@ -36,8 +58,9 @@ class PySideUI:
         port = int(port)
         if not ok: return
 
+        self.contacts_model.beginInsertRows(QtCore.QModelIndex(), 0, 0)
         self.whatcha_doin.address_book.addContact(name, (ipaddr, port))
-
+        self.contacts_model.endInsertRows()
 
 
 def centerWindow(window):
