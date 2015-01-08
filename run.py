@@ -9,10 +9,10 @@ from app.networking.udp import UdpNetworking
 from app.core.AddressBook import AddressBook
 from app.ui.console import ConsoleUI
 
-from app.ui.pyside import PySideUI
+from app.ui.pyside.pyside import PySideUI
 
 @click.command()
-@click.option('--port', default = 8101, help = 'Port number')
+@click.option('--port', default = 8104, help = 'Port number')
 @click.option('--name', default = 'user', help = 'Username')
 def main(port, name):
     networking = UdpNetworking(port)

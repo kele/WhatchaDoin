@@ -3,37 +3,17 @@ __author__ = 'kele'
 import sys
 from PySide import QtGui, QtCore, QtUiTools
 
-
-class AddressBookModel(QtCore.QAbstractListModel):
-    def __init__(self, address_book):
-        super().__init__()
-        self.address_book = address_book
-
-    def rowCount(self, *args, **kwargs):
-        return self.address_book.size()
-
-    def data(self, index, role = QtCore.Qt.DisplayRole):
-        if role == QtCore.Qt.DisplayRole:
-            if index.row() < self.address_book.size():
-                c = list(self.address_book.contacts.items())[index.row()]
-                return c[0] + ' ' + c[1][0] + ':' + str(c[1][1])
-        else:
-            return None
-
+from app.ui.pyside.AddressBookModel import AddressBookModel
 
 class PySideUI:
     def __init__(self, whatcha_doin):
         self.whatcha_doin = whatcha_doin
         self.app = QtGui.QApplication([])
 
-        loader = QtUiTools.QUiLoader()
-        file = QtCore.QFile('untitled.ui')
-        file.open(QtCore.QFile.ReadOnly)
-        self.main_window = loader.load(file)
-        file.close()
+        # TODO: remove hardcode
+        self.loadUIFile('untitled.ui')
 
-        assert isinstance(self.main_window, QtGui.QMainWindow)
-
+        # TODO: map objects from UI
         add_button = self.main_window.findChild(QtGui.QPushButton, 'addContactButton')
         assert isinstance(add_button, QtGui.QPushButton)
         add_button.clicked.connect(self._addButtonAction)
@@ -43,6 +23,13 @@ class PySideUI:
         self.list_view.setModel(self.contacts_model)
 
         self.main_window.show()
+
+    def loadUIFile(self, filename):
+        loader = QtUiTools.QUiLoader()
+        file = QtCore.QFile(filename)
+        file.open(QtCore.QFile.ReadOnly)
+        self.main_window = loader.load(file)
+        file.close()
 
     def run(self):
         sys.exit(self.app.exec_())
@@ -58,9 +45,7 @@ class PySideUI:
         port = int(port)
         if not ok: return
 
-        self.contacts_model.beginInsertRows(QtCore.QModelIndex(), 0, 0)
-        self.whatcha_doin.address_book.addContact(name, (ipaddr, port))
-        self.contacts_model.endInsertRows()
+        self.contacts_model.insertItem(name, (ipaddr, port))
 
 
 def centerWindow(window):
