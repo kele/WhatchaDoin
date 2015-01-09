@@ -32,7 +32,9 @@ class PySideUI:
         file.close()
 
     def run(self):
-        sys.exit(self.app.exec_())
+        retval = self.app.exec_()
+        self.whatcha_doin.is_running = False
+        return retval
 
     def _addButtonAction(self):
         name, ok = QtGui.QInputDialog.getText(self.main_window, 'Name', 'Enter name:')

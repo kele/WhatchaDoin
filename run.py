@@ -23,6 +23,7 @@ def main(port, name):
     networkingThread.start()
 
     ui.run()
+    networkingThread.join()
 
 
 if __name__ == "__main__":

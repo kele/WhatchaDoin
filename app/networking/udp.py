@@ -25,7 +25,10 @@ class RequestHandler(BaseRequestHandler):
 class Server:
     def run(self, whatcha_doin, port):
         server = UDPServer(("localhost", port), lambda *args: RequestHandler(whatcha_doin, *args))
-        server.serve_forever()
+        server.timeout = 5
+
+        while whatcha_doin.is_running:
+            server.handle_request()
 
 
 class UdpNetworking:
