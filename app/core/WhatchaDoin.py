@@ -1,29 +1,44 @@
 __author__ = 'kele'
 
-from . import AddressBook
 from threading import Lock
 
 
 class WhatchaDoin:
-    def __init__(self, username, networking, address_book):
+    def __init__(self, networking, address_book):
         self.address_book = address_book
-        self.user_id = self.address_book.addContact(username, networking.local_address)
-        self.setUserStatus('free')
+
+        self.user_status = {'busy': 'free', 'desc': ''}
+
         self._running = True
         self._running_lock = Lock()
 
+        self._buddy_statuses = {}
         self._get_status_func = networking.getStatus
 
-    def setUserStatus(self, busy_flag, desc=''):
-        self._user_status = { 'busy_flag': busy_flag, 'desc': desc }
+    def buddyCount(self):
+        return self.address_book.size()
 
-    def getUserStatus(self):
-        return self._user_status
+    def setBuddyStatus(self, name, busy, desc=''):
+        self._buddy_statuses[name] = {'busy':busy, 'desc':desc}
 
-    def getStatus(self, id):
-        addr = self.address_book.contacts[id]
-        return self._get_status_func(addr)
 
+    def refresh(self):
+        self._buddy_statuses.clear()
+
+        for (name, _) in self.address_book:
+            self.getFreshBuddyStatus(name)
+
+    def getBuddyStatus(self, name):
+        if name in self._buddy_statuses:
+            return self._buddy_statuses[name]
+        else:
+            return self.getFreshBuddyStatus(name)
+
+    def getFreshBuddyStatus(self, name):
+        addr = self.address_book.contacts[name]
+        status = self._get_status_func(addr)
+        self._buddy_statuses[name] = status
+        return status
 
     @property
     def is_running(self):
@@ -35,8 +50,3 @@ class WhatchaDoin:
     def is_running(self, running):
         with self._running_lock:
             self._running = running
-
-
-
-
-

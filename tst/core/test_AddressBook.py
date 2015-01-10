@@ -6,22 +6,24 @@ from app.core.AddressBook import AddressBook
 
 ADDRESS_1 = ('111.111.111.111', 1337)
 ADDRESS_2 = ('111.111.111.111', 1338)
+
+
 class TestAddressBook(unittest.TestCase):
     def setUp(self):
         self.sut = AddressBook()
 
     def test_init(self):
-        self.assertEqual(self.sut.contacts, {})
+        self.assertEqual(self.sut._contacts, {})
 
     def test_addContact_new(self):
-        id_1 = self.sut.addContact('fakename', ADDRESS_1)
+        self.sut.addContact('fakename', ADDRESS_1)
 
-        self.assertEqual(self.sut.contacts[id_1], ADDRESS_1)
+        self.assertEqual(self.sut._contacts['fakename'], ADDRESS_1)
         self.assertEqual(self.sut.size(), 1)
 
-        id_2 = self.sut.addContact('fakename2', ADDRESS_2)
+        self.sut.addContact('fakename2', ADDRESS_2)
 
-        self.assertEqual(self.sut.contacts[id_2], ADDRESS_2)
+        self.assertEqual(self.sut._contacts['fakename2'], ADDRESS_2)
         self.assertEqual(self.sut.size(), 2)
 
     def test_addContact_existingName(self):
@@ -44,15 +46,15 @@ class TestAddressBook(unittest.TestCase):
         self.assertEqual(self.sut.size(), 10)
 
         for i in range(0, 10):
+            self.assertEqual(self.sut.size(), 10 - i)
             self.sut.deleteContact('fakename' + str(i))
 
         self.assertEqual(self.sut.size(), 0)
 
-
     def test_deleteContact_exists(self):
-        id = self.sut.addContact('fakaname', ADDRESS_1)
+        self.sut.addContact('fakename', ADDRESS_1)
 
-        self.sut.deleteContact(id)
+        self.sut.deleteContact('fakename')
         self.assertEqual(self.sut.size(), 0)
 
     def test_deleteContact_notExists(self):

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>457</width>
-    <height>524</height>
+    <width>439</width>
+    <height>255</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,25 +18,12 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>460</y>
+      <y>210</y>
       <width>293</width>
-      <height>29</height>
+      <height>41</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="2" alignment="Qt::AlignVCenter">
-      <widget class="QPushButton" name="pushButton">
-       <property name="minimumSize">
-        <size>
-         <width>94</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Remove contact</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="addContactButton">
        <property name="sizePolicy">
@@ -63,24 +50,28 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
+      <widget class="QPushButton" name="removeContactButton">
+       <property name="minimumSize">
         <size>
-         <width>100</width>
-         <height>20</height>
+         <width>94</width>
+         <height>0</height>
         </size>
        </property>
-      </spacer>
+       <property name="text">
+        <string>Remove contact</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="refreshButton">
+       <property name="text">
+        <string>Refresh</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="statusBox">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -90,12 +81,12 @@
      </rect>
     </property>
     <property name="title">
-     <string/>
+     <string>Your status:</string>
     </property>
-    <widget class="QRadioButton" name="radioButton">
+    <widget class="QRadioButton" name="busyRadioButton">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>0</x>
        <y>20</y>
        <width>90</width>
        <height>20</height>
@@ -105,10 +96,10 @@
       <string>Busy</string>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton_2">
+    <widget class="QRadioButton" name="freeRadioButton">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>0</x>
        <y>50</y>
        <width>90</width>
        <height>20</height>
@@ -125,20 +116,10 @@
       <x>10</x>
       <y>10</y>
       <width>291</width>
-      <height>441</height>
+      <height>191</height>
      </rect>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>457</width>
-     <height>23</height>
-    </rect>
-   </property>
   </widget>
  </widget>
  <resources/>

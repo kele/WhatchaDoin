@@ -1,6 +1,8 @@
 __author__ = 'kele'
 
+# TODO: delete this file after GUI is done
 import click
+
 
 class ConsoleUI:
     def __init__(self, whatcha_doin):
@@ -24,7 +26,8 @@ class ConsoleUI:
             else:
                 click.echo('Unknown command: ' + input)
 
-    def _greet(self):
+    @staticmethod
+    def _greet():
         click.echo("Hi!")
 
     def _add(self):
@@ -38,16 +41,16 @@ class ConsoleUI:
         click.echo(self.whatcha_doin.address_book.listContacts())
 
         id = int(click.prompt("Id of contact to check status"))
-        status = self.whatcha_doin.getStatus(id)
+        status = self.whatcha_doin.getBuddyStatus(id)
         click.echo("Status: " + status)
 
     def _update(self):
         input = click.prompt("Busy?").lower()
 
         if input == 'yes':
-            self.whatcha_doin.setUserStatus('busy')
+            self.whatcha_doin.setBuddyStatus('busy')
         elif input == 'no':
-            self.whatcha_doin.setUserStatus('free')
+            self.whatcha_doin.setBuddyStatus('free')
         else:
             click.echo('Incorrect answer (yes/no)')
 
