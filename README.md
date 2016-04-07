@@ -1,6 +1,8 @@
 WhatchaDoin
 ===========
 
+# This is project is under WIP and has been temporarily (or permamently) abandoned.
+
 ## What **WhatchaDoin** is?
 
 **WhatchaDoin** is an app that helps with increasing productivity by letting your coworkers/roommate/significant other know whatcha doin'.
